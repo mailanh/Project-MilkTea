@@ -87,9 +87,12 @@ namespace DoAnTotNghiep.Controllers
             {
                 Product sp = db.Products.Find(productID);
                 Size size = db.Sizes.Find(sizeID);
-                foreach (var item in topping)
+                if (topping != null)
                 {
-                    TotalAmount += item.Price;
+                    foreach (var item in topping)
+                    {
+                        TotalAmount += item.Price;
+                    }
                 }
                 CartItem newItem = new CartItem()
                 {
@@ -104,7 +107,8 @@ namespace DoAnTotNghiep.Controllers
                     SizeID = size.SizeID,
                     UnitPrice = size.UnitPrice,
                     ToppingID = topping,
-                    Totals = quantity * (sp.Price + size.UnitPrice + TotalAmount)
+                    PriceWithOption = (sp.Price + size.UnitPrice + TotalAmount),
+                    Totals = quantity * (sp.Price + size.UnitPrice + TotalAmount),
                 };
 
                 cartItems.Add(newItem);
@@ -119,9 +123,11 @@ namespace DoAnTotNghiep.Controllers
             {
                 CartItem cardItem = cartItems.FirstOrDefault(s => s.ProductID == productID);
                 Size size = db.Sizes.Find(sizeID);
-                foreach (var item in topping)
-                {
-                    TotalAmount += item.Price;
+                if (topping != null) { 
+                        foreach (var item in topping)
+                        {
+                            TotalAmount += item.Price;
+                        }
                 }
                 CartItem newItem = new CartItem()
                 {
@@ -136,6 +142,7 @@ namespace DoAnTotNghiep.Controllers
                     SizeID = size.SizeID,
                     UnitPrice = cardItem.UnitPrice,
                     ToppingID = topping,
+                    PriceWithOption = (cardItem.Price + size.UnitPrice + TotalAmount),
                     Totals = quantity * (cardItem.Price + size.UnitPrice + TotalAmount)
                 };
                 cartItems.Add(newItem);
@@ -181,17 +188,36 @@ namespace DoAnTotNghiep.Controllers
 
         }
 
-        public ActionResult ChangeCartItem(int productID,int quantity)
+        public ActionResult ChangeCartItem(int productID, int quantity)
         {
             cartItems = GetListCart();
             CartItem editItems = cartItems.FirstOrDefault(m => m.ProductID == productID);
-            if (editItems!=null)
+            if (editItems != null)
             {
                 editItems.Quantity = quantity;
+                editItems.Totals = editItems.Quantity * editItems.PriceWithOption;
             }
             return Content(JsonConvert.SerializeObject(new
             {
                 cartItems
+            }));
+        }
+
+        public ActionResult EditCart(int productID)
+        {
+            cartItems = GetListCart();
+            CartItem editCart = cartItems.FirstOrDefault(m => m.ProductID == productID);
+            var listSize = db.Sizes.ToList();
+            var listStone = db.AmountOfStones.ToList();
+            var listSugar = db.AmountOfSugars.ToList();
+            var listTopping = db.Toppings.ToList();
+            return Content(JsonConvert.SerializeObject(new
+            {
+                editCart,
+                listSize,
+                listStone,
+                listSugar,
+                listTopping,
             }));
         }
     }

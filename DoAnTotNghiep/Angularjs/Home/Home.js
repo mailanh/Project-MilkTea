@@ -48,7 +48,7 @@ function myController($scope, $http) {
             $scope.Description = $scope.GetDetail.Description;
 
             $scope.ListSize = res.data.listSize;
-            $scope.SizeID = res.data.listSize[0].SizeID;
+            $scope.SizeID = $scope.GetDetail.SizeID;
             $scope.ListStone = res.data.listStone;
             $scope.ListSugar = res.data.listSugar;
             $scope.ListTopping = res.data.listTopping;
@@ -144,7 +144,7 @@ function myController($scope, $http) {
 
     // Delete CartItem By ID
     $scope.DeleteCart = function (content) {
-        debugger
+        
         var data = {
             productID: content,
         }
@@ -204,47 +204,19 @@ function myController($scope, $http) {
         });
     }
 
-    // Change quantity of CartItem
-    /*$scope.ChangeQuantity = function (ProductID, Quantity) {
-        debugger
-        if (Quantity <= 0) {
-            toastr.error('Sản phẩm không thể nhỏ hơn 0', 'Error');
-            return
-        }
-        else {
-            var data = {
-                iMaSP: iMaSP,
-            }
-            var response = $http({
-                url: "/ShopCart/GetSP",
-                method: "POST",
-                data: JSON.stringify(data),
-                dataType: "json"
-            });
-            response.then(function (res) {
-                $scope.SanPham = res.data.result;
-                console.log($scope.SanPham)
-                if ($scope.SanPham[0].MaSP == iMaSP) {
-                    if ($scope.SanPham[0].SoLuong < iSoLuong) {
-                        toastr.error("Số lượng sản phẩm này chỉ còn " + $scope.SanPham[0].SoLuong + " " + "sản phẩm", 'Error');
-                        for (var i = 0; i < $scope.ListShopCart.length; i++) {
-                            if ($scope.ListShopCart[i].iMaSP == iMaSP) {
-                                $scope.ListShopCart[i].iSoLuongBan = $scope.SanPham[0].SoLuong;
-                                break;
-                            }
-                        }
-                        return;
-                    }
+    $scope.EditQuantity = function (content, quantity, change) {
 
+        switch (change) {
+            case 'plus':
+                quantity++;
+                break;
+            case 'minus':
+                if (quantity > 1) {
+                    quantity--;
                 }
-            }, function (res) {
-                AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
-            });
+                break
         }
-
-    }*/
-    $scope.EditQuantity = function (content) {
-        var data = { productID: content, quantity: content }
+        var data = { productid: content, quantity: quantity }
 
         var response = $http({
             url: "/Cart/ChangeCartItem",
@@ -253,9 +225,51 @@ function myController($scope, $http) {
             dataType: "json"
         });
         response.then(function (res) {
-            console.log(res);
+            $scope.GetListCart();
         }, function (res) {
-            AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
+            appendtotoastr(false, "thông báo", "... lỗi rồi !");
+        });
+    }
+
+    //$scope.EditCart = function (productID) {
+
+    //    var data = {
+    //        result: productID
+    //    }
+    //}
+
+    $scope.EditCart = function (productID) {
+        var data = {
+            productID: productID
+        };
+        var response = $http({
+            url: "/Cart/EditCart",
+            method: "POST",
+            data: JSON.stringify(data),
+            dataType: "json"
+        });
+        response.then(function mySuccess(res) {
+            $scope.GetDetail = res.data.editCart;
+            $scope.ProductID = $scope.GetDetail.ProductID;
+            $scope.ProductName = $scope.GetDetail.ProductName;
+            $scope.Price = $scope.GetDetail.Price;
+            $scope.MetaTitle = $scope.GetDetail.MetaTitle;
+            $scope.SupplierName = $scope.GetDetail.SupplierName;
+            $scope.Image = $scope.GetDetail.Image;
+            $scope.CategoryName = $scope.GetDetail.CategoryName;
+            $scope.Description = $scope.GetDetail.Description;
+            $scope.SizeID = $scope.GetDetail.SizeID;
+            $scope.AmountStoneName = $scope.GetDetail.AmountOfStone;
+            $scope.AmountSugarName = $scope.GetDetail.AmountOfSugar;
+            $scope.ToppingID = $scope.GetDetail.ToppingID;
+            $scope.quantity = $scope.GetDetail.Quantity;
+
+            $scope.ListSize = res.data.listSize;
+            $scope.ListStone = res.data.listStone;
+            $scope.ListSugar = res.data.listSugar;
+            $scope.ListTopping = res.data.listTopping;
+            //console.log($scope.ListProduct);
+        }, function myError(res) {
         });
     }
 };

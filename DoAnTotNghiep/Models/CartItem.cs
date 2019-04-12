@@ -65,6 +65,8 @@ namespace DoAnTotNghiep.Models
         /// </summary>
         public double? Totals { get; set; }
 
+        public double? PriceWithOption { get; set; }
+
     }
     public class ListCartItem
     {
