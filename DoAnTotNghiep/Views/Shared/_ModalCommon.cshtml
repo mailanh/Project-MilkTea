@@ -1,0 +1,282 @@
+﻿
+
+
+<div class="modal fade product_view" id="product_view" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span title="Đóng" aria-hidden="true">x</span>
+                </button>
+                <h3 class="modal-title" style="text-align:center">Thông tin sản phẩm</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="FormDetail">
+                        <div class="col-md-6 product_img">
+                            <img title="{{ProductName}}" ng-src="~/Images/Img_project/{{Image}}" class="img-responsive" alt="{{ProductName}}">
+                        </div>
+                        <div class="col-md-6 product_content">
+                            <h5>Mã sản phẩm: <span class="label label-danger">#10023{{ProductID}}</span></h5><br />
+                            <h5>Tên sản phẩm: <span class="label label-info">{{ProductName}}</span></h5><br />
+                            <h5>Thương hiệu: <span class="label label-warning">{{SupplierName}}</span></h5><br />
+                            <div class="rating">
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                (10 reviews)
+                            </div><br />
+                            <h5>Mô tả:</h5>
+                            <p>Trà sữa đài loan, được làm từ trà xanh thiên nhiên và sữa tưới nguyên chất. Giúp thanh lọc cơ thể, giải khát mùa hè</p>
+                            <h3 class="cost">{{Price | number:0}} đ<small class="pre-cost">  60.000 đ</small></h3><br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Size:</label>
+                                    <select class="form-control" id="size" ng-model="SizeID" ng-options="a.SizeID as a.SizeID for a in ListSize"></select>
+                                </div>
+                                <!-- end col -->
+                                <div class="col-md-4">
+                                    <label>Đá:</label>
+                                    <select class="form-control" id="stone" ng-model="AmountStoneName" ng-options="a.AmountStoneName as a.AmountStoneName for a in ListStone">
+                                        @*<option value="" disabled>Chọn đá</option>*@
+                                    </select>
+                                </div>
+                                <!-- end col -->
+                                <div class="col-md-4">
+                                    <label>Đường:</label>
+                                    <select class="form-control" name="state" id="sugar" ng-model="AmountSugarName" ng-options="a.AmountSugarName as a.AmountSugarName for a in ListSugar">
+                                        @*<option value="" selected="">Lượng đường:</option>*@
+                                    </select>
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Topping:</label><br />
+                                    <select class="form-control" id="topping" ng-model="ToppingID" ng-options="a.Name for a in ListTopping" multiple="multiple">
+                                        @*<option value="" selected="" style="width:300px">Lượng đường:</option>*@
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label">Số lượng:</label>
+                                    <input type="text" placeholder="Nhập số lượng" ng-model="quantity" id="quantity" class="form-control" required/>
+                                    <span class="text-danger">{{message}}</span>
+                                </div>
+                            </div>
+                            <div class="space-ten"></div>
+                            <div class="btn-ground">
+                                <button type="submit" ng-click="AddToCart()" class="btn btn-success"><span class="fa fa-shopping-cart"></span> Đặt hàng</button>
+                                <a href="/chi-tiet/{{MetaTitle}}-{{ProductID}}" class="btn btn-info"><span class="fa fa-eye"></span> Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="register" class="modal__account modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="-ap icon-close"></span></button>
+                <h4 class="modal-title">Đăng ký tài khoản</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-7 col-xs-12 col-sm-7 account__input">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input__label">
+                                    <div class="label">Email</div>
+                                </div>
+                                <div class="input__wrap">
+                                    <input type="text" class="form-control" placeholder="Email...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input__label">
+                                    <div class="label">Mật khẩu:</div>
+                                </div>
+                                <div class="input__wrap">
+                                    <input type="text" class="form-control" placeholder="Mật khẩu từ 6 đến 32 ký tự">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input__label">
+                                    <div class="label">Họ tên:</div>
+                                </div>
+                                <div class="input__wrap">
+                                    <input type="text" class="form-control" placeholder="Nhập họ tên">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input__label">
+                                    <div class="label">Giới tính:</div>
+                                </div>
+                                <div class="input__wrap">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="check__action -radio">
+                                                <input type="radio" class="checkbox" name="gender">
+                                                <span class="icon"></span>
+                                                Nam
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="check__action -radio">
+                                                <input type="radio" class="checkbox" name="gender">
+                                                <span class="icon"></span>
+                                                Nữ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="input__label">
+                                    <div class="label">Ngày sinh:</div>
+                                </div>
+                                <div class="input__wrap">
+                                    <input type="date" class="form-control" placeholder="Nhập họ tên">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="check__action">
+                                <input type="checkbox" class="checkbox">
+                                <span class="icon"></span>
+                                Tôi đồng ý mọi điều khoản của Website
+                            </div>
+                        </div>
+                        <div class="form-group login__action">
+                            <button class="btn btn-submit">Đăng Ký</button>
+                        </div>
+                        <div class="login__note">
+                            Bạn đã có tài khoản? <a data-toggle="modal" data-target="#register">Đăng nhập?</a>
+                        </div>
+                    </div>
+                    <div class="account_login__social col-md-5 col-xs-12 col-sm-5">
+                        <div class="title"><span>Đăng nhập với </span></div>
+                        <div class="list__buttons">
+                            <button class="btn btn-facebook">
+                                <span class="-ap icon-facebook icon"></span>
+                                Đăng nhập với Facebook
+                            </button>
+                            <button class="btn btn-google">
+                                <span class="-ap icon-google icon"></span>
+                                Đăng nhập với Google
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Button trigger modal -->
+@*<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#CheckOut">
+        Modal with multiple actions
+    </button>*@
+
+<!-- Modal -->
+<div class="modal fade" id="CheckOut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-center" id="myModalLabel">ĐĂNG KÍ HOẶC ĐĂNG NHẬP VÀO TÀI KHOẢN</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="text-center">
+                            KHÁCH HÀNG MỚI
+                        </h4>
+                        <p class="text-center" style="margin-top:10px">
+                            Dành cho khách hàng mới và mua hàng một lần.
+                            Nhanh gọn, đơn giản và không cần đăng ký.
+                        </p>
+                        <button type="button" class="btn btn-info" style="margin:auto" data-dismiss="modal">OK</button>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-center">
+                            ĐĂNG NHẬP
+                        </h4>
+                        <p class="text-center" style="margin-top:10px">
+                            Dành cho khách hàng đã có tài khoản mediacenter.
+                            Tài khoản mediacenter giúp quản lý đơn hàng dễ dàng hơn.
+                        </p>
+                        <button type="button" class="btn btn btn-warning" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <h4 class="text-center">
+                    <p>Mọi thắc mắc? Hãy gọi tới số</p>
+                    <i class="fa fa-phone"> </i><b>0982 022 969</b>  
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .modal-header {
+        background-color: #C49F0F;
+        padding: 9px 15px;
+        color: #FFF;
+        font-family: Verdana, sans-serif;
+        border-bottom: 1px solid #eee;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .product_view .modal-dialog {
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .pre-cost {
+        text-decoration: line-through;
+        color: #a5a5a5;
+    }
+
+    .space-ten {
+        padding: 10px 0;
+    }
+
+    .modal-content {
+        margin-top: 50px;
+    }
+    /*#quantity{
+            border-color:#ff0000;
+        }*/
+</style>

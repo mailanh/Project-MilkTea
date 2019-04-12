@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Angularjs{
+
+    <script src="~/Angularjs/Home/Home.js"></script>
+    @*<script src="~/Angularjs/Home/ShoppingCartService.js"></script>*@
+}
+<div class="animate-dropdown">
+    <!-- ========================================= BREADCRUMB ========================================= -->
+    <div id="breadcrumb-alt">
+        <div class="container">
+            <div class="breadcrumb-nav-holder minimal">
+                <ul>
+                    <li class=" breadcrumb-item">
+                        <a href="/Home/Index">
+                            Trang chủ
+                        </a>
+                    </li><!-- /.breadcrumb-item -->
+                    <li class="breadcrumb-item current">
+                        <a href="#">Giỏ hàng</a>
+                    </li><!-- /.breadcrumb-item -->
+                </ul><!-- /.breadcrumb-nav-holder -->
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /#breadcrumb-alt -->
+    <!-- ========================================= BREADCRUMB : END ========================================= -->
+</div>
+
+<section id="cart-page">
+    <div class="container">
+        <!-- ========================================= CONTENT ========================================= -->
+        <div class="col-xs-12 col-md-9 items-holder no-margin">
+
+            <div class="row no-margin cart-item" ng-repeat="item in ListShopCart">
+                <div class="col-xs-12 col-sm-2 no-margin">
+                    <a href="#" class="thumb-holder">
+                        <img class="lazy" width="100" height="100" alt="" ng-src="~/Images/Img_Project/{{item.Images}}" />
+                    </a>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 ">
+                    <div class="title">
+                        <a title="Xem chi tiết" href="/chi-tiet/{{item.MetaTitle}}-{{item.ProductID}}">{{item.ProductName}} ({{item.SizeID}})</a>
+                        <p>{{item.AmountOfStone}} đá, {{item.AmountOfSugar}} đường</p>
+                        <p><span class="label label-danger">Topping</span> : <span title="{{subItem.Price}}" ng-repeat="subItem in item.ToppingID">{{subItem.Name}}, </span></p>
+                    </div>
+                    <div class="brand"><span class="badge badge-dark">Gongcha</span></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-2 no-margin">
+                    <div class="quantity">
+                        <div class="le-quantity">
+                            <form>
+                                <a class="minus" href="#" ng-model="reduction" ng-click="EditQuantity(item.ProductID)"></a>
+                                <input name="quantity" readonly="readonly" ng-change="ChangeQuantity(item.ProductID,item.Quantity)" type="text" value="{{item.Quantity}}" />
+                                <a class="plus" href="#" ng-model="increase" ng-click="EditQuantity(item.ProductID)"></a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2 no-margin">
+                    <div class="price">
+                        {{item.Totals|number:0}} <sup>đ</sup>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-sm-2 no-margin" style="padding:21px 0">
+                    <a href="#" ng-click="" class="btn btn-warning" id="tooltipex" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a href="#" ng-click="DeleteCart(item.ProductID)" id="tooltipex" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center" ng-show="CartNull" style="margin-top:70px">
+                <img src="~/Images/favicon/null.png" />
+                <h3 style="text-align:center" ng-bind="isNull"></h3>
+                <h4 style="text-align:center;padding-top:5px">Vui lòng đặt hàng <a href="/Home/Index"><span class="badge"></span>tại đây</a></h4>
+                @*<h4 id="timer" style="text-align:center"></h4>*@
+            </div>
+        </div>
+        <!-- ========================================= CONTENT : END ========================================= -->
+        <!-- ========================================= SIDEBAR ========================================= -->
+
+        <div class="col-xs-12 col-md-3 no-margin sidebar ">
+            <div class="widget cart-summary">
+                <h1 class="border">Giỏ hàng của bạn</h1>
+                <div class="body">
+                    <ul class="tabled-data no-border inverse-bold">
+                        <li>
+                            <label>Số lượng</label>
+                            <div class="value pull-right">{{CountCart}}</div>
+                        </li>
+                        <li>
+                            <label>Thành tiền</label>
+                            <div class="value pull-right">{{TotalCart|number:0}}<sup>đ</sup></div>
+                        </li>
+                        <li>
+                            <label>shipping</label>
+                            <div class="value pull-right">free ship</div>
+                        </li>
+                    </ul>
+                    <ul id="total-price" class="tabled-data inverse-bold no-border">
+                        <li>
+                            <label>Tổng tiền</label>
+                            <div class="value pull-right">{{TotalCart|number:0}}<sup>đ</sup></div>
+                        </li>
+                    </ul>
+                    <div class="buttons-holder">
+                        <a class="le-button {{BanCheckout}} big" href="#" data-toggle="modal" data-target="#CheckOut">Thanh toán</a>
+                        <a class="simple-link block" href="/Home/Index">Tiếp tục mua hàng</a>
+                    </div>
+                </div>
+            </div><!-- /.widget -->
+
+            <div id="cupon-widget" class="widget">
+                <h1 class="border">Phiếu giảm giá</h1>
+                <div class="body">
+                    <form>
+                        <div class="inline-input">
+                            <input data-placeholder="Nhập mã khuyến mãi" type="text" />
+                            <button class="le-button {{BanCheckout}}" type="submit">Apply</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.widget -->
+        </div><!-- /.sidebar -->
+        <!-- ========================================= SIDEBAR : END ========================================= -->
+    </div>
+</section>
