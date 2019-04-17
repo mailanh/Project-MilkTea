@@ -56,8 +56,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Topping:</label><br />
-                                    <select class="form-control" id="topping" ng-model="ToppingID" ng-options="a.Name for a in ListTopping" multiple="multiple">
-                                        @*<option value="" selected="" style="width:300px">Lượng đường:</option>*@
+                                    <select class="form-control" id="topping" ng-model="ToppingID" ng-options="a.Name as a.Name for a in ListTopping" multiple="multiple">
                                     </select>
                                 </div>
 
@@ -71,7 +70,8 @@
                             </div>
                             <div class="space-ten"></div>
                             <div class="btn-ground">
-                                <button type="submit" ng-click="AddToCart()" class="btn btn-success"><span class="fa fa-shopping-cart"></span> Đặt hàng</button>
+                                <button type="submit" ng-show="isShowAdd" ng-click="AddToCart()" class="btn btn-success"><span class="fa fa-shopping-cart"></span> Đặt hàng</button>
+                                <button type="submit" ng-show="isShowEdit" ng-click="EditCartItem()" class="btn btn-success"><span class="fa fa-shopping-cart"></span> Cập nhật</button>
                                 <a href="/chi-tiet/{{MetaTitle}}-{{ProductID}}" class="btn btn-info"><span class="fa fa-eye"></span> Xem chi tiết</a>
                             </div>
                         </div>

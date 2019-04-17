@@ -38,17 +38,17 @@ namespace DoAnTotNghiep.Models
         /// <summary>
         /// Lượng đá
         /// </summary>
-        public string AmountOfStone { get; set; }
+        public string AmountOfStone { get; set; } = "30%";
 
         /// <summary>
         /// Lượng đường
         /// </summary>
-        public string AmountOfSugar { get; set; }
+        public string AmountOfSugar { get; set; } = "30%";
 
         /// <summary>
         /// Mã size
         /// </summary>
-        public string SizeID { get; set; }
+        public string SizeID { get; set; } = "M";
 
         /// <summary>
         /// Đơn giá theo size
@@ -59,6 +59,7 @@ namespace DoAnTotNghiep.Models
         /// Mã topping
         /// </summary>
         public Topping[] ToppingID { get; set; }
+        public string[] ToppingID1 { get; set; }
 
         /// <summary>
         /// Thành tiền
@@ -66,10 +67,16 @@ namespace DoAnTotNghiep.Models
         public double? Totals { get; set; }
 
         public double? PriceWithOption { get; set; }
-
+        public int? index { get; set; }
     }
-    public class ListCartItem
+    public class InputCartItem
     {
-        List<CartItem> cartItems = new List<CartItem>();
+        public int productID { get; set; }
+        public int? quantity { get; set; }
+        public string sizeID { get; set; }
+        public string amountOfStone { get; set; }
+        public string amountOfSugar { get; set; }
+        public string[] Topping1 { get; set; }
+        public int? index { get; set; }
     }
 }

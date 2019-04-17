@@ -39,13 +39,12 @@
 </div>
 <div id="single-product">
     <div class="container">
-
         <div class="no-margin col-xs-12 col-sm-6 col-md-5 gallery-holder">
             <div class="product-item-holder size-big single-product-gallery small-gallery">
 
                 <div id="owl-single-product">
                     <div class="single-product-gallery-item" id="slide1">
-                        <a data-rel="prettyphoto" href="~/Images/Img_project/Hinh-Web-OKINAWA-SUA-TUOI.png">
+                        <a data-rel="prettyphoto" href="~/Images/Img_project/Img_project/{{Image}}">
                             <img class="img-responsive" alt="" ng-src="~/Images/Img_project/{{Image}}" />
                         </a>
                     </div><!-- /.single-product-gallery-item -->
@@ -77,18 +76,33 @@
 
                 <div class="prices">
                     <div class="price-current">{{Price|number:0}} đ</div>
-                    <div class="price-prev">{{ProductName}}</div>
+                    <div class="price-prev">{{Price|number:0}} đ</div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Size:</label>
+                    <select class="form-control" id="size" ng-model="SizeID" ng-options="a.SizeID as a.SizeID for a in ListSize"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Đá:</label>
+                    <select class="form-control" id="stone" ng-model="AmountStoneName" ng-options="a.AmountStoneName as a.AmountStoneName for a in ListStone"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Đường:</label>
+                    <select class="form-control" name="state" id="sugar" ng-model="AmountSugarName" ng-options="a.AmountSugarName as a.AmountSugarName for a in ListSugar"></select>
+                </div>
+                <div class="form-group">
+                    <label>Topping:</label>
+                    <select class="form-control" id="topping1" ng-model="ToppingID" ng-options="a.Name for a in ListTopping" multiple="multiple"></select>
                 </div>
 
                 <div class="qnt-holder">
                     <div class="le-quantity">
                         <form>
-                            <a class="minus" href="#reduce"></a>
-                            <input name="quantity" readonly="readonly" type="text" value="1" />
-                            <a class="plus" href="#add"></a>
+                            <input name="quantity" placeholder="Nhập SL" ng-model="quantity" type="text" value="1" />
                         </form>
                     </div>
-                    <a id="addto-cart" href="cart.html" class="le-button huge">Đặt hàng</a>
+                    <button id="addto-cart" ng-click="AddToCart()" class="le-button huge">Đặt hàng</button>
                 </div><!-- /.qnt-holder -->
             </div><!-- /.body -->
 
@@ -323,7 +337,7 @@
         <div class="carousel-holder hover">
 
             <div class="title-nav">
-                <h2 class="h1">Sản phẩm cùng danh mục: {{CategoryName}}</h2>
+                <h2 class="h1">Sản phẩm cùng danh mục</h2>
                 <div class="nav-holder">
                     <a href="#prev" data-target="#owl-recently-viewed" class="slider-prev btn-prev fa fa-angle-left"></a>
                     <a href="#next" data-target="#owl-recently-viewed" class="slider-next btn-next fa fa-angle-right"></a>
@@ -332,8 +346,8 @@
 
             <div id="owl-recently-viewed" class="owl-carousel product-grid-holder">
 
-                <div class="owl-item" ng-repeat="item in ListRelatedProduct">
-                    <div class="no-margin carousel-item product-item-holder size-small hover" >
+               <!-- <div class="owl-item item" ng-repeat="item in ListRelatedProduct">
+                    <div class="no-margin carousel-item product-item-holder size-small hover">
                         <div class="product-item">
                             <div class="{{item.IsHot}}"><span>{{item.IsNew}}</span></div>
                             <div class="image">
@@ -357,39 +371,39 @@
                                     <a class="btn-add-to-compare" href="#">Compare</a>
                                 </div>
                             </div>
-                        </div><!-- /.product-item -->
+                        </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.product-item-holder -->
-                @*@foreach (var item in ViewBag.ListProduct)
-                {
-                    <div class="no-margin carousel-item product-item-holder size-small hover" style="float:left">
-                        <div class="product-item">
-                            <div class="ribbon red"><span>sale</span></div>
-                            <div class="image">
-                                <img alt="" src="~/Images/Img_Project/@item.Image" />
-                            </div>
-                            <div class="body">
-                                <div class="title">
-                                    <a href="single-product.html">@item.ProductName</a>
+                @foreach (var item in ViewBag.ListProduct)
+                    {
+                        <div class="no-margin carousel-item product-item-holder size-small hover" style="float:left">
+                            <div class="product-item">
+                                <div class="ribbon red"><span>sale</span></div>
+                                <div class="image">
+                                    <img alt="" src="~/Images/Img_Project/@item.Image" />
                                 </div>
-                                <div class="brand">Sharp</div>
-                            </div>
-                            <div class="prices">
-                                <div class="price-current text-right">$1199.00</div>
-                            </div>
-                            <div class="hover-area">
-                                <div class="add-cart-button">
-                                    <a href="single-product.html" class="le-button">Add to Cart</a>
+                                <div class="body">
+                                    <div class="title">
+                                        <a href="single-product.html">@item.ProductName</a>
+                                    </div>
+                                    <div class="brand">Sharp</div>
                                 </div>
-                                <div class="wish-compare">
-                                    <a class="btn-add-to-wishlist" href="#">Add to Wishlist</a>
-                                    <a class="btn-add-to-compare" href="#">Compare</a>
+                                <div class="prices">
+                                    <div class="price-current text-right">$1199.00</div>
                                 </div>
-                            </div>
-                        </div><!-- /.product-item -->
-                    </div><!-- /.product-item-holder -->
-                }*@
+                                <div class="hover-area">
+                                    <div class="add-cart-button">
+                                        <a href="single-product.html" class="le-button">Add to Cart</a>
+                                    </div>
+                                    <div class="wish-compare">
+                                        <a class="btn-add-to-wishlist" href="#">Add to Wishlist</a>
+                                        <a class="btn-add-to-compare" href="#">Compare</a>
+                                    </div>
+                                </div>
+                            </div><!-- /.product-item -->
+                        </div><!-- /.product-item-holder -->
+                    }
             </div><!-- /#recently-carousel -->
 
         </div><!-- /.carousel-holder -->

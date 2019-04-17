@@ -45,7 +45,7 @@
                     <div class="title">
                         <a title="Xem chi tiết" href="/chi-tiet/{{item.MetaTitle}}-{{item.ProductID}}">{{item.ProductName}} ({{item.SizeID}})</a>
                         <p>{{item.AmountOfStone}} đá, {{item.AmountOfSugar}} đường</p>
-                        <p><span class="label label-danger">Topping</span> : <span title="{{subItem.Price}}" ng-repeat="subItem in item.ToppingID">{{subItem.Name}}, </span></p>
+                        <p><span class="label label-danger">Topping</span> : <span title="{{subItem.Price}}" ng-repeat="subItem in item.ToppingID1">{{subItem}}, </span></p>
                     </div>
                     <div class="brand"><span class="badge badge-dark">Gongcha</span></div>
                 </div>
@@ -54,9 +54,9 @@
                     <div class="quantity">
                         <div class="le-quantity">
                             <form>
-                                <a class="minus" href="#" ng-click="EditQuantity(item.ProductID,item.Quantity,'minus')"></a>
+                                <a class="minus" ng-click="EditQuantity(item.index,item.Quantity,'minus')"></a>
                                 <input name="quantity" readonly="readonly" type="text" value="{{item.Quantity}}" />
-                                <a class="plus" href="#" ng-click="EditQuantity(item.ProductID,item.Quantity,'plus')"></a>
+                                <a class="plus" ng-click="EditQuantity(item.index,item.Quantity,'plus')"></a>
                             </form>
                         </div>
                     </div>
@@ -68,12 +68,12 @@
 
                 </div>
                 <div class="col-xs-12 col-sm-2 no-margin" style="padding:21px 0">
-                    <a href="#" ng-click="EditCart(item.ProductID)" class="btn btn-warning" data-toggle="modal" data-target="#product_view" title="Chỉnh sửa">
+                    <button href="#" ng-click="GetCartModal(item)" class="btn btn-warning" data-toggle="modal" data-target="#product_view" title="Chỉnh sửa">
                         <i class="fas fa-pencil-alt"></i>
-                    </a>
-                    <a href="#" ng-click="DeleteCart(item.ProductID)" id="tooltipex" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm">
+                    </button>
+                    <button href="#" ng-click="DeleteCart(item.ProductID)" id="tooltipex" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm">
                         <i class="fas fa-trash"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
 

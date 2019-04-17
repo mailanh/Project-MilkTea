@@ -66,15 +66,7 @@ namespace DoAnTotNghiep.Controllers
             return query;
         }
 
-        public ActionResult AddToCart
-            (
-            int productID,
-            int? quantity,
-            string sizeID,
-            string amountOfStone,
-            string amountOfSugar,
-            Topping[] topping
-            )
+        public ActionResult AddToCart(InputCartItem input)
         {
             double? TotalAmount = 0;
             if (Session["CartItems"] == null)
@@ -83,32 +75,56 @@ namespace DoAnTotNghiep.Controllers
             }
 
             cartItems = GetListCart();
-            if (cartItems.FirstOrDefault(m => m.ProductID == productID) == null)
+            int count = cartItems.Count();
+            int index = 0;
+            if (cartItems.FirstOrDefault(m => m.ProductID == input.productID) == null)
             {
-                Product sp = db.Products.Find(productID);
-                Size size = db.Sizes.Find(sizeID);
-                if (topping != null)
+                if (count != 0)
                 {
-                    foreach (var item in topping)
+                    index = count++;
+                }
+                else
+                {
+                    index = 1;
+                }
+                Product sp = db.Products.Find(input.productID);
+                Size size = db.Sizes.Find(input.sizeID);
+                if (input.Topping1 != null)
+                {
+                    for (int i = 0; i < input.Topping1.Length; i++)
                     {
-                        TotalAmount += item.Price;
+                        string ToppingName = input.Topping1[i];
+                        Topping tp = db.Toppings.FirstOrDefault(s => s.Name == ToppingName);
+                        TotalAmount += tp.Price;
                     }
                 }
+
+                //Topping tp = db.Toppings.Find(1);
+
+                //if (topping != null)
+                //{
+                //    foreach (var item in topping)
+                //    {
+                //        TotalAmount += item.Price;
+                //    }
+                //}
                 CartItem newItem = new CartItem()
                 {
                     ProductID = sp.ProductID,
                     ProductName = sp.ProductName,
                     Images = sp.Image,
                     Price = sp.Price,
-                    Quantity = quantity,
+                    Quantity = input.quantity,
                     MetaTitle = sp.MetaTitle,
-                    AmountOfStone = amountOfStone,
-                    AmountOfSugar = amountOfSugar,
+                    AmountOfStone = input.amountOfStone,
+                    AmountOfSugar = input.amountOfSugar,
                     SizeID = size.SizeID,
                     UnitPrice = size.UnitPrice,
-                    ToppingID = topping,
+                    //ToppingID = topping,
+                    ToppingID1 = input.Topping1,
+                    index = index,
                     PriceWithOption = (sp.Price + size.UnitPrice + TotalAmount),
-                    Totals = quantity * (sp.Price + size.UnitPrice + TotalAmount),
+                    Totals = input.quantity * (sp.Price + size.UnitPrice + TotalAmount),
                 };
 
                 cartItems.Add(newItem);
@@ -121,14 +137,26 @@ namespace DoAnTotNghiep.Controllers
             }
             else
             {
-                CartItem cardItem = cartItems.FirstOrDefault(s => s.ProductID == productID);
-                Size size = db.Sizes.Find(sizeID);
-                if (topping != null) { 
-                        foreach (var item in topping)
-                        {
-                            TotalAmount += item.Price;
-                        }
+
+                CartItem cardItem = cartItems.FirstOrDefault(s => s.ProductID == input.productID);
+                Size size = db.Sizes.Find(input.sizeID);
+                if (input.Topping1 != null)
+                {
+                    for (int i = 0; i < input.Topping1.Length; i++)
+                    {
+                        string ToppingName = input.Topping1[i];
+                        Topping tp = db.Toppings.FirstOrDefault(s => s.Name == ToppingName);
+                        TotalAmount += tp.Price;
+                    }
                 }
+
+                //Size size = db.Sizes.Find(sizeID);
+                //if (topping != null) { 
+                //        foreach (var item in topping)
+                //        {
+                //            TotalAmount += item.Price;
+                //        }
+                //}
                 CartItem newItem = new CartItem()
                 {
                     ProductID = cardItem.ProductID,
@@ -136,14 +164,15 @@ namespace DoAnTotNghiep.Controllers
                     Images = cardItem.Images,
                     MetaTitle = cardItem.MetaTitle,
                     Price = cardItem.Price,
-                    Quantity = quantity,
-                    AmountOfStone = amountOfStone,
-                    AmountOfSugar = amountOfSugar,
+                    Quantity = input.quantity,
+                    AmountOfStone = input.amountOfStone,
+                    AmountOfSugar = input.amountOfSugar,
                     SizeID = size.SizeID,
                     UnitPrice = cardItem.UnitPrice,
-                    ToppingID = topping,
+                    //ToppingID = topping,
+                    index = index,
                     PriceWithOption = (cardItem.Price + size.UnitPrice + TotalAmount),
-                    Totals = quantity * (cardItem.Price + size.UnitPrice + TotalAmount)
+                    Totals = input.quantity * (cardItem.Price + size.UnitPrice + TotalAmount)
                 };
                 cartItems.Add(newItem);
                 messages.Success = true;
@@ -153,13 +182,6 @@ namespace DoAnTotNghiep.Controllers
                     messages
                 }));
             }
-            messages.Success = false;
-            messages.Contents = "Thêm sản phẩm vào giỏ hàng thất bại !";
-            return Content(JsonConvert.SerializeObject(new
-            {
-                messages
-            }));
-            //return null;
         }
         public ActionResult DeleteCartItem(int productID)
         {
@@ -188,10 +210,10 @@ namespace DoAnTotNghiep.Controllers
 
         }
 
-        public ActionResult ChangeCartItem(int productID, int quantity)
+        public ActionResult ChangeCartItem(int index, int quantity)
         {
             cartItems = GetListCart();
-            CartItem editItems = cartItems.FirstOrDefault(m => m.ProductID == productID);
+            CartItem editItems = cartItems.FirstOrDefault(m => m.index == index);
             if (editItems != null)
             {
                 editItems.Quantity = quantity;
@@ -203,7 +225,7 @@ namespace DoAnTotNghiep.Controllers
             }));
         }
 
-        public ActionResult EditCart(int productID)
+        public ActionResult GetCartModal(int productID)
         {
             cartItems = GetListCart();
             CartItem editCart = cartItems.FirstOrDefault(m => m.ProductID == productID);
@@ -218,6 +240,39 @@ namespace DoAnTotNghiep.Controllers
                 listStone,
                 listSugar,
                 listTopping,
+            }));
+        }
+
+        public ActionResult EditCart(InputCartItem input)
+        {
+            double? TotalAmount = 0;
+            cartItems = GetListCart();
+            CartItem editCart = cartItems.FirstOrDefault(m => m.index == input.index);
+            Size size = db.Sizes.FirstOrDefault(s => s.SizeID == input.sizeID);
+            editCart.Quantity = input.quantity;
+            editCart.AmountOfStone = input.amountOfStone;
+            editCart.AmountOfSugar = input.amountOfSugar;
+            editCart.SizeID = input.sizeID;
+            editCart.ToppingID1 = input.Topping1;
+            var a = editCart.ToppingID1;
+            if (a != null)
+            {
+                for (int i = 0; i < a.Length; i++)
+                {
+                    string ToppingName = a[i];
+                    Topping tp = db.Toppings.FirstOrDefault(s => s.Name == ToppingName);
+                    TotalAmount += tp.Price;
+
+                }
+            }
+            editCart.PriceWithOption = (editCart.Price + size.UnitPrice + TotalAmount);
+            editCart.Totals = input.quantity * (editCart.Price + size.UnitPrice + TotalAmount);
+
+            messages.Success = true;
+            messages.Contents = "Cập nhật giỏ hàng thàng thành công !";
+            return Content(JsonConvert.SerializeObject(new
+            {
+                messages
             }));
         }
     }
