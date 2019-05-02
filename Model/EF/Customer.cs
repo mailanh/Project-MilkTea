@@ -8,7 +8,13 @@ namespace Model.EF
 
     public partial class Customer
     {
-        public int ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customer()
+        {
+            Orders = new HashSet<Order>();
+        }
+
+        public int CustomerID { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }
@@ -48,5 +54,7 @@ namespace Model.EF
         public string ModifiedBy { get; set; }
 
         public bool? Status { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

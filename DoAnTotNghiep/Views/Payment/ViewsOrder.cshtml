@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Thông tin đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Angularjs{
+    <script src="~/Angularjs/Payment/PaymentDetail.js"></script>
+}
+<script>
+    var content=@Html.Raw(Json.Encode(ViewBag.OrderID));
+</script>
+
+<div class="animate-dropdown">
+    <!-- ========================================= BREADCRUMB ========================================= -->
+    <div id="breadcrumb-alt">
+        <div class="container">
+            <div class="breadcrumb-nav-holder minimal">
+                <ul>
+                    <li class=" breadcrumb-item">
+                        <a href="/Home/Index">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/gio-hang">Giỏ hàng</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Thanh toán</a>
+                    </li>
+                    <li class="breadcrumb-item current">
+                        <a href="#">Thông tin đơn hàng</a>
+                    </li>
+                </ul><!-- /.breadcrumb-nav-holder -->
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /#breadcrumb-alt -->
+    <!-- ========================================= BREADCRUMB : END ========================================= -->
+</div>
+<section id="checkout-page">
+    <div class="container">
+        <div class="col-xs-12 no-margin">
+
+            <div class="alert alert-success" style="padding: 20px 20px;">
+                <i class="fa fa-check-circle" style="font-size:30px;float: left;margin-top:10px;"></i>
+                <div style="margin-left: 40px;">
+                    <p>Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ sớm liên hệ để xác nhận!</p>
+                    <p style="color: #777;">Thông tin chi tiết đơn hàng đã được gửi vào Email của bạn</p>
+                </div>
+            </div>
+            <h4 style="font-weight: bold;">Thông tin đơn hàng:</h4>
+            <table class="table table-striped">
+                <tr>
+                    <td style="width: 180px;">Mã đơn hàng</td>
+                    <td style="font-weight: bold;">@ViewBag.MaDH</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Mã khách hàng</td>
+                    <td style="font-weight: bold;">@ViewBag.MaKH</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Số tiền</td>
+                    <td style="font-weight: bold;">@ViewBag.Tongtien<sup>vnđ</sup></td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Hình thức vận chuyển</td>
+                    <td style="font-weight: bold;">Giao hàng tận nơi - 50.000đ</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Hình thức thanh toán</td>
+                    <td style="font-weight: bold;">Thu tiền tại nhà</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Tổng số tiền cần thanh toán</td>
+                    <td style="font-weight: bold;">@ViewBag.TT1<sup>vnđ</sup></td>
+                </tr>
+                <?php } ?>
+            </table>
+            <h4 style="font-weight: bold;">Thông tin thanh toán và giao hàng:</h4>
+            <table class="table table-striped">
+                <tr>
+                    <td style="width: 180px;">Họ tên</td>
+                    <td style="font-weight: bold;">@ViewBag.Name</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Số điện thoại</td>
+                    <td style="font-weight: bold;">@ViewBag.Phone</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Địa chỉ</td>
+                    <td style="font-weight: bold;">@ViewBag.Address</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Email</td>
+                    <td style="font-weight: bold;">@ViewBag.Email</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+
+
+

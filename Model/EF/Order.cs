@@ -23,5 +23,7 @@ namespace Model.EF
         public double? Total { get; set; }
 
         public int? Status { get; set; }
+
+        public virtual Customer Customer { get; set; }
     }
 }

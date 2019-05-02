@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Angularjs{
+    <script src="~/Angularjs/Payment/Payment.js"></script>
+}
+
+<div class="animate-dropdown">
+    <!-- ========================================= BREADCRUMB ========================================= -->
+    <div id="breadcrumb-alt">
+        <div class="container">
+            <div class="breadcrumb-nav-holder minimal">
+                <ul>
+                    <li class=" breadcrumb-item">
+                        <a href="/Home/Index">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/gio-hang">Giỏ hàng</a>
+                    </li>
+                    <li class="breadcrumb-item current">
+                        <a href="#">Thanh toán</a>
+                    </li>
+                </ul><!-- /.breadcrumb-nav-holder -->
+            </div>
+        </div><!-- /.container -->
+    </div><!-- /#breadcrumb-alt -->
+    <!-- ========================================= BREADCRUMB : END ========================================= -->
+</div>
+
+<section id="checkout-page">
+    <div class="container">
+        <div class="col-xs-12 no-margin">
+
+            <div class="billing-address">
+                <h2 class="border h1">Địa chỉ thanh toán</h2>
+                <form>
+                    <div class="row field-row">
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Họ và tên <span class="text-danger">(*)</span></label>
+                            <input class="le-input" ng-model="Data.Name"  ng-change="ChangeName()" data-placeholder="Nhập đầy đủ họ & tên">
+                            <span class="text-danger" ng-bind="ErrorName"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Giới tính </label>
+                            <input class="le-input" ng-model="Data.Gender" ng-change="ChangeGender()" placeholder="Giới tính">
+                            <span class="text-danger" ng-bind="ErrorGender"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Ngày sinh </label>
+                            <input class="le-input" ng-model="Data.DateOfBirth" ng-change="ChangeDateOfBirth()" placeholder="Ngày sinh">
+                            <span class="text-danger" ng-bind="ErrorDateOfBirth"></span>
+                        </div>
+                    </div><!-- /.field-row -->
+
+                    <div class="row field-row">
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Số điện thoại <span class="text-danger">(*)</span></label>
+                            <input class="le-input" ng-model="Data.Phone" ng-change="ChangePhone()"  placeholder="Số điện thoại người nhận">
+                            <span class="text-danger" ng-bind="ErrorPhone"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Địa chỉ <span class="text-danger">(*)</span></label>
+                            <input class="le-input" ng-model="Data.Address" ng-change="ChangeAddress()" data-placeholder="Địa chỉ giao hàng">
+                            <span class="text-danger" ng-bind="ErrorAddress"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <label>Địa chỉ Gmail <span class="text-danger">(*)</span></label>
+                            <input class="le-input" ng-model="Data.Gmail" ng-change="ChangeGmail()" placeholder="Gmail">
+                            <span class="text-danger" ng-bind="ErrorGmail"></span>
+                        </div>
+                    </div><!-- /.field-row -->
+
+                    <div class="row field-row">
+                        <div id="create-account" class="col-xs-12">
+                            <input class="le-checkbox big" type="checkbox" />
+                            <a class="simple-link bold" href="#">Create Account?</a> - you will receive email with temporary generated password after login you need to change it.
+                        </div>
+                    </div><!-- /.field-row -->
+
+                </form>
+            </div><!-- /.billing-address -->
+
+            <section id="cart-page">
+                <div class="container">
+                    <div class="col-xs-12 col-md-12 items-holder no-margin">
+                        <h2 class="border h1">Đơn đặt hàng của bạn</h2>
+                        <div class="row no-margin cart-item" ng-repeat="item in ListShopCart">
+                            <div class="col-xs-12 col-sm-2 no-margin">
+                                <a href="#" class="thumb-holder">
+                                    <img class="lazy" width="100" height="100" alt="" ng-src="~/Images/Img_Project/{{item.Images}}" />
+                                </a>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4 ">
+                                <div class="title">
+                                    <a title="Xem chi tiết" href="/chi-tiet/{{item.MetaTitle}}-{{item.ProductID}}">{{item.ProductName}} ({{item.SizeID}})</a>
+                                    <p>{{item.AmountOfStone}} đá, {{item.AmountOfSugar}} đường</p>
+                                    <p><span class="label label-danger">Topping</span> : <span title="{{subItem.Price}}" ng-repeat="subItem in item.ToppingID1">{{subItem}}, </span></p>
+                                </div>
+                                <div class="brand"><span class="badge badge-dark">Gongcha</span></div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-2 no-margin">
+                                <div class="quantity">
+                                    <div class="le-quantity">
+                                        <form>
+                                            <a class="minus" ng-click="EditQuantity(item.index,item.Quantity,'minus')"></a>
+                                            <input name="quantity" readonly="readonly" type="text" value="{{item.Quantity}}" />
+                                            <a class="plus" ng-click="EditQuantity(item.index,item.Quantity,'plus')"></a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-2 no-margin">
+                                <div class="price">
+                                    {{item.Totals|number:0}} <sup>đ</sup>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-12 col-sm-2 no-margin" style="padding:21px 0">
+                                <button ng-click="GetCartModal(item)" class="btn btn-warning disabled" data-toggle="modal" data-target="#product_view" title="Chỉnh sửa">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button ng-click="DeleteCart(item.ProductID)" id="tooltipex" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section><!-- /#your-order -->
+
+            <div id="payment-method-options">
+                <form>
+                    <div class="payment-method-option">
+                        <input class="le-radio" type="radio" name="group2" value="Direct">
+                        <div class="radio-label bold ">
+                            Direct Bank Transfer<br>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum tempus elit, vestibulum vestibulum erat ornare id.</p>
+                        </div>
+                    </div>
+
+                    <div class="payment-method-option">
+                        <input class="le-radio" type="radio" name="group2" value="cheque">
+                        <div class="radio-label bold ">cheque payment</div>
+                    </div>
+
+                    <div class="payment-method-option">
+                        <input class="le-radio" type="radio" name="group2" value="paypal">
+                        <div class="radio-label bold ">paypal system</div>
+                    </div>
+                </form>
+            </div>
+            <div id="total-area" class="row no-margin">
+                <div class="col-xs-12  no-margin-right">
+                    <div id="subtotal-holder">
+                        <ul class="tabled-data inverse-bold no-border">
+                            <li>
+                                <label>Số sản phẩm</label>
+                                <div class="value ">{{CountCart}}</div>
+                            </li>
+                            <li>
+                                <label>Tổng số lượng</label>
+                                <div class="value ">{{TotalQuantity}}</div>
+                            </li>
+                            <li>
+                                <label>Thành tiền</label>
+                                <div class="value ">{{TotalCart|number:0}}<sup>đ</sup></div>
+                            </li>
+                        </ul><!-- /.tabled-data -->
+
+                        <ul id="total-field" class="tabled-data inverse-bold ">
+                            <li>
+                                <label>Tổng thanh toán</label>
+                                <div class="value">{{TotalCart|number:0}}<sup>đ</sup></div>
+                            </li>
+                        </ul><!-- /.tabled-data -->
+
+                    </div><!-- /#subtotal-holder -->
+                </div><!-- /.col -->
+            </div><!-- /#total-area -->
+            <div class="place-order-button">
+                <button class="le-button big" ng-click="Order()">Đặt hàng</button>
+            </div><!-- /.place-order-button -->
+
+        </div>
+    </div><!-- /.container -->
+</section><!-- /#checkout-page -->

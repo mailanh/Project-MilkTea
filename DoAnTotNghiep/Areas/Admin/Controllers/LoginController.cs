@@ -76,7 +76,7 @@ namespace DoAnTotNghiep.Areas.Admin.Controllers
                     messages
                 }));
             }
-            return View("Index");
+            //return View("Index");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace DoAnTotNghiep
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            //routes.IgnoreRoute("");
             routes.MapRoute(
                  "Product Detail",
                  "{chi-tiet}/{metatitle}-{id}",
@@ -22,13 +22,28 @@ namespace DoAnTotNghiep
 
             routes.MapRoute(
                  "Shopping Cart",
-                 "{gio-hang}/{metatitle}-{id}",
+                 "gio-hang",
                  new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
                  new[] { "DoAnTotNghiep.Controllers" }
             );
 
             routes.MapRoute(
+                 "Check out",
+                 "thanh-toan",
+                 new { controller = "Payment", action = "Index", id = UrlParameter.Optional },
+                 new[] { "DoAnTotNghiep.Controllers" }
+            );
+
+            routes.MapRoute(
+                 "Error",
+                 "loi-404",
+                 new { controller = "Payment", action = "Notfound404", id = UrlParameter.Optional },
+                 new[] { "DoAnTotNghiep.Controllers" }
+            );
+
+            routes.MapRoute(
                  "Default",
+                 //"{controller}/{action}/{id}",
                  "{controller}/{action}/{id}",
                  new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                  new[] { "DoAnTotNghiep.Controllers" }

@@ -1,7 +1,7 @@
 ﻿
 
 @{
-    ViewBag.Title = "Trang Chủ";
+    ViewBag.Title = "Lanh Milk & Tea | Boutique";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -114,14 +114,14 @@
 
                     </div>
                     <div class="loadmore-holder text-center">
-                        <a style=" margin-top:21px" class="btn btn-danger" href="#">
+                        <button style=" margin-top:21px" class="btn btn-danger" ng-click="ViewMore()" ng-show="ShowLoadMore">
                             Xem thêm
                             <i class="fa fa-angle-down"></i>
-                        </a>
-                        @*<a style=" margin-top:21px" class="btn btn-danger" href="#">
-                                Ẩn
-                                <i class="fa fa-angle-up"></i>
-                            </a>*@
+                        </button>
+                        <button style=" margin-top:21px" class="btn btn-danger" ng-click="HideMore()" ng-show="HideLoadMore">
+                            Ẩn
+                            <i class="fa fa-angle-up"></i>
+                        </button>
                     </div>
 
                 </div>

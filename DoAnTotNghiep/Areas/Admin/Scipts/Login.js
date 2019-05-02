@@ -27,7 +27,7 @@ app.controller('myCtrl', function ($scope, $http, $rootScope) {
                 'Content-Type': undefined
             }
         }
-        
+
         $http(request)
             .then(function mySuccess(res) {
                 console.log(res);
@@ -62,25 +62,27 @@ app.controller('myCtrl', function ($scope, $http, $rootScope) {
 
                 }
                 if (res.data.messages.Success == true) {
-                    //$.notify({
-                    //    // options <i class="fas fa-check-circle"></i>
-                    //    icon: 'far fa-check-circle',
-                    //    title: '<strong>Success: </strong><br>',
-                    //    message: res.data.messages.Contents
-                    //}, {
-                    //        // settings
-                    //        type: 'success',
+                    $.notify({
+                        // options <i class="fas fa-check-circle"></i>
+                        icon: 'fa fa-paper-plane',
+                        title: '<strong>Success: </strong><br>',
+                        message: 'Đăng nhập thành công !'
+                    }, {
+                            // settings
+                            type: 'success',
 
-                    //        placement: {
-                    //            from: "top",
-                    //            align: "right"
-                    //        },
-                    //        animate: {
-                    //            enter: 'animated flipInY',
-                    //            exit: 'animated flipOutX'
-                    //        }
-                    //    });
-                    location.href = "/Admin/Home/Index";
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            },
+                            animate: {
+                                enter: 'animated flipInY',
+                                exit: 'animated flipOutX'
+                            }
+                        });
+                    setTimeout(function () {
+                        location.href = "/Admin/Home/Index";
+                    }, 1500);
                 }
             }, function myError(res) {
                 //$scope.load();

@@ -19,10 +19,13 @@ namespace Model.EF
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ProductID { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ToppingID { get; set; }
+        public string ToppingID { get; set; }
+
+        public string SizeID { get; set; }
+
+        public string AmountOfStone { get; set; }
+
+        public string AmountOfSugar { get; set; }
 
         public int? Quantity { get; set; }
 

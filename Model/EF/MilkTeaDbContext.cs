@@ -209,6 +209,12 @@ namespace Model.EF
                .HasRequired(e => e.ProductCategory)
                .WithMany(e => e.Products)
                .HasForeignKey(e => e.CategoryID);
+
+            //modelBuilder.Entity<Order>()
+            //   .HasRequired(e => e.Customer)
+            //   .WithMany(e => e.Orders)
+            //   .HasForeignKey(e => e.CustomerID);
+
         }
     }
 }

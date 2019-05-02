@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/Areas/Admin/Scipts/product.js"></script>
+}
+<section class="content-header">
+    <h1>
+        Sản phẩm
+        <small>Quản lý sản phẩm</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Sản phẩm</li>
+    </ol>
+</section>
+<div class="content">
+    <p>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addnew">Thêm mới <span class="fa fa-plus"></span></button>
+    </p>
+    <div class="box box-info">
+        <div class="box-header">
+            <h3 class="box-title">Danh sách sản phẩm</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="example5" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Images</th>
+                                    <th>Category Name</th>
+                                    <th>Supplier Name</th>
+                                    <th>Created Date</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in ListProduct">
+                                    <td style="vertical-align:middle">
+                                        <span class="label label-danger" ng-bind="item.ProductID"></span>
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        <span class="badge" ng-bind="item.ProductName"></span>
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        <img ng-src="~/Images/Img_Project/{{item.Image}}" width="100" />
+                                    </td>
+                                    <td style="vertical-align:middle" ng-bind="item.CategoryID"></td>
+                                    <td style="vertical-align:middle" ng-bind="item.SupplierID"></td>
+                                    <td style="vertical-align:middle" ng-model="CreateDate">{{CreateDate}}</td>
+                                    <td style="vertical-align:middle">
+                                        <span class="label label-warning">{{item.Price}}<sup>đ</sup> </span>
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        <span class="badge bg-green">{{item.Status}}<i class="fa fa-check-circle"></i></span>
+                                    </td>
+
+                                    <td style="vertical-align:middle">
+                                        <a class="btn bg-purple btn-sm" ng-click="Editsp(item.ProductID)" data-toggle="tooltip" data-placement="top" title="Sửa sản phẩm"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn bg-maroon btn-sm" ng-click="Deletesp(item.ProductID)" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm"><i class="fa fa-close"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>

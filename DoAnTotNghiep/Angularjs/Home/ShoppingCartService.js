@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../scripts/angular.min.js" />
+﻿///// <reference path="../../../scripts/angular.min.js" />
 
 app.factory('cartService', function () {
     return {
