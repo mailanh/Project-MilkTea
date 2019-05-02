@@ -8,12 +8,14 @@ using Model.EF;
 using System.Data.Entity;
 using Newtonsoft.Json;
 using DoAnTotNghiep.ViewModel;
+using DoAnTotNghiep.Models;
 
 namespace DoAnTotNghiep.Controllers
 {
     public class HomeController : Controller
     {
-        MilkTeaDbContext db = new MilkTeaDbContext();
+        private readonly MilkTeaDbContext db = new MilkTeaDbContext();
+        private readonly Messages messages = new Messages();
         // GET: Home
         public ActionResult Index()
         {
@@ -28,26 +30,109 @@ namespace DoAnTotNghiep.Controllers
         //        result
         //    }));
         //}
-        public ActionResult LoadAllProduct()
+        public ActionResult LoadAllProduct(int quantity, int status)
         {
-            var query = db.Products
-             .Include(s => s.Supplier)
-             .Select(s => new
-             {
-                 ProductID = s.ProductID,
-                 Price = s.Price,
-                 PriceImport = s.PriceImport,
-                 Image = s.Image,
-                 IsHot = s.IsHot,
-                 IsNew = s.IsNew,
-                 ProductName = s.ProductName,
-                 MetaTitle = s.MetaTitle,
-                 SupperlierName = s.Supplier.SupperlierName
-             }).Take(8).OrderBy(s => s.ProductID).ToList();
-            return Content(JsonConvert.SerializeObject(new
+            if (status == 1)
             {
-                query
-            }));
+                var query = db.Products
+                                 .Include(s => s.Supplier)
+                                 .Select(s => new
+                                 {
+                                     ProductID = s.ProductID,
+                                     Price = s.Price,
+                                     PriceImport = s.PriceImport,
+                                     Image = s.Image,
+                                     IsHot = s.IsHot,
+                                     IsNew = s.IsNew,
+                                     ProductName = s.ProductName,
+                                     MetaTitle = s.MetaTitle,
+                                     SupperlierName = s.Supplier.SupperlierName
+                                 }).Take(quantity).OrderBy(s => s.ProductID).ToList();
+                if (quantity > query.Count)
+                {
+                    messages.Success = true;
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        messages,
+                        query
+                    }));
+                }
+                else
+                {
+                    messages.Success = false;
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        messages,
+                        query
+                    }));
+                }
+            }
+            else if (status == 0)
+            {
+                if (quantity == 4)
+                {
+                    var query = db.Products
+                 .Include(s => s.Supplier)
+                 .Select(s => new
+                 {
+                     ProductID = s.ProductID,
+                     Price = s.Price,
+                     PriceImport = s.PriceImport,
+                     Image = s.Image,
+                     IsHot = s.IsHot,
+                     IsNew = s.IsNew,
+                     ProductName = s.ProductName,
+                     MetaTitle = s.MetaTitle,
+                     SupperlierName = s.Supplier.SupperlierName
+                 }).Take(4).OrderBy(s => s.ProductID).ToList();
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        query
+                    }));
+                }
+                else
+                {
+                    var query = db.Products
+                 .Include(s => s.Supplier)
+                 .Select(s => new
+                 {
+                     ProductID = s.ProductID,
+                     Price = s.Price,
+                     PriceImport = s.PriceImport,
+                     Image = s.Image,
+                     IsHot = s.IsHot,
+                     IsNew = s.IsNew,
+                     ProductName = s.ProductName,
+                     MetaTitle = s.MetaTitle,
+                     SupperlierName = s.Supplier.SupperlierName
+                 }).Take(quantity).OrderBy(s => s.ProductID).ToList();
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        query
+                    }));
+                }
+            }
+            else
+            {
+                var query = db.Products
+                .Include(s => s.Supplier)
+                .Select(s => new
+                {
+                    ProductID = s.ProductID,
+                    Price = s.Price,
+                    PriceImport = s.PriceImport,
+                    Image = s.Image,
+                    IsHot = s.IsHot,
+                    IsNew = s.IsNew,
+                    ProductName = s.ProductName,
+                    MetaTitle = s.MetaTitle,
+                    SupperlierName = s.Supplier.SupperlierName
+                }).Take(4).OrderBy(s => s.ProductID).ToList();
+                return Content(JsonConvert.SerializeObject(new
+                {
+                    query
+                }));
+            }
         }
 
         public ActionResult ProductDetail(int Id)

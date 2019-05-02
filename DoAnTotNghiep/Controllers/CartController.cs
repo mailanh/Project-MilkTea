@@ -69,6 +69,7 @@ namespace DoAnTotNghiep.Controllers
         public ActionResult AddToCart(InputCartItem input)
         {
             double? TotalAmount = 0;
+            int? index = 0;
             if (Session["CartItems"] == null)
             {
                 Session["CartItems"] = new List<CartItem>();
@@ -76,16 +77,16 @@ namespace DoAnTotNghiep.Controllers
 
             cartItems = GetListCart();
             int count = cartItems.Count();
-            int index = 0;
+            
             if (cartItems.FirstOrDefault(m => m.ProductID == input.productID) == null)
             {
                 if (count != 0)
                 {
-                    index = count++;
+                    index = count;
                 }
                 else
                 {
-                    index = 1;
+                    index += index;
                 }
                 Product sp = db.Products.Find(input.productID);
                 Size size = db.Sizes.Find(input.sizeID);
@@ -98,16 +99,6 @@ namespace DoAnTotNghiep.Controllers
                         TotalAmount += tp.Price;
                     }
                 }
-
-                //Topping tp = db.Toppings.Find(1);
-
-                //if (topping != null)
-                //{
-                //    foreach (var item in topping)
-                //    {
-                //        TotalAmount += item.Price;
-                //    }
-                //}
                 CartItem newItem = new CartItem()
                 {
                     ProductID = sp.ProductID,
@@ -120,7 +111,6 @@ namespace DoAnTotNghiep.Controllers
                     AmountOfSugar = input.amountOfSugar,
                     SizeID = size.SizeID,
                     UnitPrice = size.UnitPrice,
-                    //ToppingID = topping,
                     ToppingID1 = input.Topping1,
                     index = index,
                     PriceWithOption = (sp.Price + size.UnitPrice + TotalAmount),
@@ -137,7 +127,10 @@ namespace DoAnTotNghiep.Controllers
             }
             else
             {
-
+                if (count != 0)
+                {
+                    index = count++;
+                }
                 CartItem cardItem = cartItems.FirstOrDefault(s => s.ProductID == input.productID);
                 Size size = db.Sizes.Find(input.sizeID);
                 if (input.Topping1 != null)
@@ -149,14 +142,6 @@ namespace DoAnTotNghiep.Controllers
                         TotalAmount += tp.Price;
                     }
                 }
-
-                //Size size = db.Sizes.Find(sizeID);
-                //if (topping != null) { 
-                //        foreach (var item in topping)
-                //        {
-                //            TotalAmount += item.Price;
-                //        }
-                //}
                 CartItem newItem = new CartItem()
                 {
                     ProductID = cardItem.ProductID,
@@ -169,7 +154,7 @@ namespace DoAnTotNghiep.Controllers
                     AmountOfSugar = input.amountOfSugar,
                     SizeID = size.SizeID,
                     UnitPrice = cardItem.UnitPrice,
-                    //ToppingID = topping,
+                    ToppingID1 = input.Topping1,
                     index = index,
                     PriceWithOption = (cardItem.Price + size.UnitPrice + TotalAmount),
                     Totals = input.quantity * (cardItem.Price + size.UnitPrice + TotalAmount)

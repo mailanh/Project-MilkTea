@@ -79,4 +79,10 @@ namespace DoAnTotNghiep.Models
         public string[] Topping1 { get; set; }
         public int? index { get; set; }
     }
+    //public InputCartItem(InputCartItem input, CartItem cartItem)
+    //{
+    //    cartItem.SizeID = input.sizeID;
+
+    //    return null;
+    //}
 }
