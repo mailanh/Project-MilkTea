@@ -81,7 +81,6 @@
                 <img src="~/Images/favicon/null.png" />
                 <h3 style="text-align:center" ng-bind="isNull"></h3>
                 <h4 style="text-align:center;padding-top:5px">Vui lòng đặt hàng <a href="/Home/Index"><span class="badge"></span>tại đây</a></h4>
-                @*<h4 id="timer" style="text-align:center"></h4>*@
             </div>
         </div>
         <!-- ========================================= CONTENT : END ========================================= -->
@@ -112,7 +111,7 @@
                         </li>
                     </ul>
                     <div class="buttons-holder">
-                        <a class="le-button {{BanCheckout}} big" href="#" data-toggle="modal" data-target="#CheckOut">Thanh toán</a>
+                        <button class="le-button {{BanCheckout}} big" ng-click="Redirect()" @*data-toggle="modal" data-target="#CheckOut"*@>Thanh toán</button>
                         <a class="simple-link block" href="/Home/Index">Tiếp tục mua hàng</a>
                     </div>
                 </div>

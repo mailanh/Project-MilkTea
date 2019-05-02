@@ -64,8 +64,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="control-label">Số lượng:</label>
-                                    <input type="text" placeholder="Nhập số lượng" ng-model="quantity" id="quantity" class="form-control" required/>
-                                    <span class="text-danger">{{message}}</span>
+                                    <input type="text" placeholder="Nhập số lượng" ng-model="quantity" ng-change="ChangQuantity()" id="quantity" class="form-control"/>
+                                    <span class="text-danger" ng-bind="message"></span>
                                 </div>
                             </div>
                             <div class="space-ten"></div>
