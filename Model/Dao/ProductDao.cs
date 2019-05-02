@@ -29,12 +29,30 @@ namespace Model.Dao
             return result;
         }
 
-        public List<Product> GetAllProduct()
+        public IEnumerable<object> GetAllProduct()
         {
-            var result = db.Products
-                           .Where(x => x.Status == true)
-                           .OrderBy(x => x.ProductID)
-                           .ToList();
+            //var result = db.Products
+            //               .Where(x => x.Status == true)
+            //               .OrderBy(x => x.ProductID)
+            //               .ToList();
+            var result = from product in db.Products
+                         join ProductCategory in db.ProductCategories
+                         on product.CategoryID equals ProductCategory.ID
+                         join Supplier in db.Suppliers
+                         on product.SupplierID equals Supplier.SupperlierID
+                         select new
+                         {
+                             ProductID = product.ProductID,
+                             ProductName = product.ProductName,
+                             Images = product.Image,
+                             CategoryName = ProductCategory.Name,
+                             SupplierName = Supplier.SupperlierName,
+                             //CreatedDate = String.Format("{0:MM/dd/yyyy}",product.CreatedDate),
+                             CreatedDate = product.CreatedDate,
+                             Price = product.Price,
+                             Status = (product.Status) == true ? "Active" : "Block"
+                         };
+            //var query = result.ToList();
             return result;
         }
         public int InsertProduct(Product product)
@@ -43,5 +61,6 @@ namespace Model.Dao
             db.SaveChanges();
             return product.ProductID;
         }
+
     }
 }

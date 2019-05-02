@@ -42,6 +42,13 @@ namespace DoAnTotNghiep
             );
 
             routes.MapRoute(
+                "Check Order",
+                "xac-nhan-don-hang-cua-ban",
+                new { controller = "Payment", action = "ViewsOrder", id = UrlParameter.Optional },
+                new[] { "DoAnTotNghiep.Controllers" }
+           );
+
+            routes.MapRoute(
                  "Default",
                  //"{controller}/{action}/{id}",
                  "{controller}/{action}/{id}",

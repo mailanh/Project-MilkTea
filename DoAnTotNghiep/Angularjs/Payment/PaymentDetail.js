@@ -48,36 +48,36 @@ function myController($scope, $http) {
         debugger
         $http({
             url: "/Payment/ViewOrderDetails/" + ID,
-            method: 'GET'
+            method: 'GET',
+            //dataType: "json"
         }).then(function mySuccess(res) {
-            console.log(res)
 
-            //chi tiết đơn hàng và sản phẩm
-            //$scope.ListCTDH = res.data.result[0].CHITIETDONBAN;
+            $scope.GetDetail = res.data.result[0];
+            console.log($scope.GetDetail)
+            $scope.OrderID = $scope.GetDetail.OrderID;
+            $scope.OrderDate = moment($scope.GetDetail.OrderDate).format("DD-MM-YYYY");
+            $scope.OrderDateLocate = moment($scope.GetDetail.OrderDate).fromNow();
+            $scope.CustomerID = $scope.GetDetail.customerID;
+            $scope.Total = $scope.GetDetail.Total;
+            $scope.Total2 = $scope.GetDetail.Total + 15000;
+            $scope.CustomerName = $scope.GetDetail.CustomerName;
+            $scope.Phone = $scope.GetDetail.Phone;
+            $scope.Gender = $scope.GetDetail.Gender;
+            $scope.DateOfBirth = moment($scope.GetDetail.DateOfBirth).format("DD-MM-YYYY");
+            $scope.Address = $scope.GetDetail.Address;
+            $scope.Gmail = $scope.GetDetail.Gmail;
 
-            ////thông tin khách hàng
-            //$scope.TenKH = res.data.result[0].KHACHHANG.TenKH;
-            //$scope.SDT = 0 + "" + res.data.result[0].KHACHHANG.SDT;
-            //$scope.DiaChi = res.data.result[0].KHACHHANG.DiaChi + " - " + res.data.result[0].KHACHHANG.HUYEN.TenHuyen + " - " + res.data.result[0].KHACHHANG.THANHPHO.TenThanhPho;
-
-            ////thông tin đơn hàng
-            //$scope.MaDB = res.data.result[0].MaDB;
-            //$scope.NgayDat = res.data.result[0].NgayDat + "-" + res.data.result[0].ThangDat + "-" + res.data.result[0].NamDat + " " + res.data.result[0].GioDat;
-            //if (res.data.result[0].PhuongThuc == 0) {
-            //    $scope.PhuongThuc = "Thanh toán tiền mặt";
-            //    $scope.Phiship = res.data.result[0].PhiShip;
-            //}
-            //else {
-            //    $scope.PhuongThuc = "Thanh toán qua thẻ";
-            //}
-            //if (res.data.result[0].TrangThaiThanhToan == true) {
-            //    $scope.TrangThaiThanhToan = "Đã thanh toán";
-            //}
-            //else {
-            //    $scope.TrangThaiThanhToan = "Chưa thanh toán";
-            //}
-            //$scope.TrangThaiDonHang = "Chờ xử lý";
-            //$scope.TongTien = res.data.result[0].TongTien;
+            if ($scope.GetDetail.Status == 0) {
+                $scope.Status = "Chờ xác nhận";
+                $scope.Class = "label label-warning";
+            } else if ($scope.GetDetail.Status == 1) {
+                $scope.Status = "Đang giao hàng";
+                $scope.Class = "label label-info";
+            } else {
+                $scope.Status = "Đã thanh toán";
+                $scope.Class = "label label-success";
+            }
+            
         }, function myError(res) {
         });
     }

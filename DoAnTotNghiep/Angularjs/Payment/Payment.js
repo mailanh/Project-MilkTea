@@ -102,7 +102,7 @@ function myController($scope, $http) {
                 })
                     .then((isRedirect) => {
                         if (isRedirect) {
-                            location.href = "/Payment/ViewsOrder"; 
+                            location.href = "/xac-nhan-don-hang-cua-ban"; 
                         } else {
                             location.href = "/Home/Index";
                         }

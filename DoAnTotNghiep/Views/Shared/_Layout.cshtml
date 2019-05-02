@@ -422,6 +422,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <!--Select2 js cdn-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!--Moment js cdn-->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>*@
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/vi.js"></script>*@
     <!-- JS Footer-->
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
@@ -469,12 +475,12 @@
             allowClear: true
         });
         $('#topping').select2({
-            tags: true, 
+            tags: true,
             width: 360,
             height: 50,
             placeholder: "Chọn topping"
         });
-       
+
 
         $('#topping1').select2({
             placeholder: "Chọn topping"

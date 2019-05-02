@@ -51,19 +51,23 @@
             <table class="table table-striped">
                 <tr>
                     <td style="width: 180px;">Mã đơn hàng</td>
-                    <td style="font-weight: bold;">@ViewBag.MaDH</td>
+                    <td style="font-weight: bold;"><span class="label label-danger">#0213{{OrderID}}</span></td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Ngày đặt</td>
+                    <td style="font-weight: bold;">{{OrderDate}} ({{OrderDateLocate}})</td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Mã khách hàng</td>
-                    <td style="font-weight: bold;">@ViewBag.MaKH</td>
+                    <td style="font-weight: bold;">#000{{CustomerID}}</td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Số tiền</td>
-                    <td style="font-weight: bold;">@ViewBag.Tongtien<sup>vnđ</sup></td>
+                    <td style="font-weight: bold;">{{Total|number:0}}<sup>vnđ</sup></td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Hình thức vận chuyển</td>
-                    <td style="font-weight: bold;">Giao hàng tận nơi - 50.000đ</td>
+                    <td style="font-weight: bold;">Giao hàng tận nơi - 15.000đ</td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Hình thức thanh toán</td>
@@ -71,27 +75,38 @@
                 </tr>
                 <tr>
                     <td style="width: 180px;">Tổng số tiền cần thanh toán</td>
-                    <td style="font-weight: bold;">@ViewBag.TT1<sup>vnđ</sup></td>
+                    <td style="font-weight: bold;">{{Total2|number:0}}<sup>vnđ</sup></td>
                 </tr>
-                <?php } ?>
+                <tr>
+                    <td style="width: 180px;">Trạng thái đơn hàng</td>
+                    <td style="font-weight: bold;"><span class="{{Class}}">{{Status}}</span></td>
+                </tr>
             </table>
             <h4 style="font-weight: bold;">Thông tin thanh toán và giao hàng:</h4>
             <table class="table table-striped">
                 <tr>
                     <td style="width: 180px;">Họ tên</td>
-                    <td style="font-weight: bold;">@ViewBag.Name</td>
+                    <td style="font-weight: bold;">{{CustomerName}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Giới tính</td>
+                    <td style="font-weight: bold;">{{Gender}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 180px;">Ngày sinh</td>
+                    <td style="font-weight: bold;">{{DateOfBirth}}</td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Số điện thoại</td>
-                    <td style="font-weight: bold;">@ViewBag.Phone</td>
+                    <td style="font-weight: bold;">{{Phone}}</td>
                 </tr>
                 <tr>
                     <td style="width: 180px;">Địa chỉ</td>
-                    <td style="font-weight: bold;">@ViewBag.Address</td>
+                    <td style="font-weight: bold;">{{Address}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 180px;">Email</td>
-                    <td style="font-weight: bold;">@ViewBag.Email</td>
+                    <td style="width: 180px;">Gmail</td>
+                    <td style="font-weight: bold;">{{Gmail}}</td>
                 </tr>
             </table>
         </div>

@@ -13,13 +13,9 @@ app.controller('myCtrl', function ($scope, $http) {
             url: "/Admin/Product/GetAllProduct",
             method: 'GET'
         }).then(function mySuccess(res) {
-            
+            console.log(res)
             $scope.ListProduct = res.data.result;
-            
-            $scope.CreateDate = res.data.CreatedDate;
-            console.log($scope.CreateDate);
         }, function myError(res) {
         });
     }
-
 });

@@ -66,7 +66,7 @@ namespace DoAnTotNghiep.Controllers
                     #region Khách đăng nhập bằng tài khoản
                     Customer cm = db.Customers.Find(customer.CustomerID);
                     order.CustomerID = customer.CustomerID;
-                    order.OrderDate = DateTime.UtcNow;
+                    //order.OrderDate = DateTime.Now;
                     order.Total = listCart.Sum(s => s.Totals);
                     order.Status = 0;
                     db.Orders.Add(order);
@@ -138,16 +138,16 @@ namespace DoAnTotNghiep.Controllers
 
         public ActionResult ViewsOrder()
         {
-            //if (Session["OrderID"] != null)
-            //{
+            if (Session["OrderID"] != null)
+            {
                 ViewBag.OrderID = Session["OrderID"];
-                //Session["OrderID"] = null;
+                Session["OrderID"] = null;
                 return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Notfound404", "Payment");
-            //}
+            }
+            else
+            {
+                return RedirectToAction("Notfound404", "Payment");
+            }
         }
 
         public ActionResult ViewOrderDetails(int ID)
@@ -155,13 +155,21 @@ namespace DoAnTotNghiep.Controllers
             //var result = db.Orders.Include(s => s.Customer).Where(s => s.OrderID == ID).ToList();
             var query = from order in db.Orders
                         .Where(s => s.OrderID == ID)
-                        join custumer in db.Customers
-                        on order.CustomerID equals custumer.CustomerID
+                        join customer in db.Customers
+                        on order.CustomerID equals customer.CustomerID
                         select new
                         {
                             OrderID = order.OrderID,
-                            CustumerName = custumer.Name,
-                            Gender = custumer.Gender
+                            OrderDate = order.OrderDate,
+                            Status = order.Status,
+                            customerID = customer.CustomerID,
+                            Total = order.Total,
+                            CustomerName = customer.Name,
+                            Phone = customer.Phone,
+                            Gender = customer.Gender,
+                            DateOfBirth = customer.DateOfBirth,
+                            Address = customer.Address,
+                            Gmail = customer.Gmail
                         };
             var result = query.ToList();
             return Content(JsonConvert.SerializeObject(new

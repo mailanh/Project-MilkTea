@@ -58,16 +58,16 @@
                                         <span class="badge" ng-bind="item.ProductName"></span>
                                     </td>
                                     <td style="vertical-align:middle">
-                                        <img ng-src="~/Images/Img_Project/{{item.Image}}" width="100" />
+                                        <img ng-src="~/Images/Img_Project/{{item.Images}}" width="100" />
                                     </td>
-                                    <td style="vertical-align:middle" ng-bind="item.CategoryID"></td>
-                                    <td style="vertical-align:middle" ng-bind="item.SupplierID"></td>
-                                    <td style="vertical-align:middle" ng-model="CreateDate">{{CreateDate}}</td>
+                                    <td style="vertical-align:middle" ng-bind="item.CategoryName"></td>
+                                    <td style="vertical-align:middle" ng-bind="item.SupplierName"></td>
+                                    <td style="vertical-align:middle">{{item.CreatedDate | date:'dd-MM-yyyy'}}</td>
                                     <td style="vertical-align:middle">
-                                        <span class="label label-warning">{{item.Price}}<sup>đ</sup> </span>
+                                        <span class="label label-warning">{{item.Price|number:0}}<sup>đ</sup> </span>
                                     </td>
                                     <td style="vertical-align:middle">
-                                        <span class="badge bg-green">{{item.Status}}<i class="fa fa-check-circle"></i></span>
+                                        <span class="badge bg-green">{{item.Status}} <i class="fa fa-check-circle"></i></span>
                                     </td>
 
                                     <td style="vertical-align:middle">
